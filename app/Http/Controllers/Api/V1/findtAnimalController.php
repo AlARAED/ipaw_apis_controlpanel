@@ -21,18 +21,13 @@ class findtAnimalController extends Controller
     public function allfindanimal()
     {
 
-
         
   $FindAnimal=FindAnimal::join('users','users.id','=','find_animals.user_id')
            ->join('categories','categories.id','=','find_animals.category_id')
            ->select('find_animals.*','categories.*','users.name as user_name','users.name as user-name')->get();
         
 
-    
-    
-        $status = true;
-        $response = ['status' => $status , 'items' => $LostAnimal  ];
-         return response()->json($response);  
+
         $status = true;
         $response = ['status' => $status , 'items' => $FindAnimal  ];
          return response()->json($response);  

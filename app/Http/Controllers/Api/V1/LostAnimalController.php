@@ -9,6 +9,7 @@ use App\Http\Requests\MyAnimalRequest;
 use App\Models\LostAnimal;
 use App\Http\Requests\LostAnimalRequest;
 
+use DB;
 
 
 
@@ -19,20 +20,23 @@ class LostAnimalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function alllostanimal()
+    
+ public function alllostanimal()
     {
 
 
-        $LostAnimal=LostAnimal::join('users','users.id','=','lost_animals.user_id')
-        ->join('categories','categories.id','=','lost_animals.category_id')
-        ->select('lost_animals.*','categories.*','users.name as user_name','users.name as user-name','image')->get();
 
+            $LostAnimal=LostAnimal::join('users','users.id','=','lost_animals.user_id')
+           ->join('categories','categories.id','=','lost_animals.category_id')
+           ->select('lost_animals.*','categories.*','users.name as user_name','users.name as user-name','lost_animals.image')->get();
+        
 
-
+    
+    
         $status = true;
-        $response = ['status' => $status , 'items' => $LostAnimal];
+        $response = ['status' => $status , 'items' => $LostAnimal ];
          return response()->json($response);
-
+        
     }
 
 
@@ -55,8 +59,10 @@ class LostAnimalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
+
+
 
     $LostAnimal = new LostAnimal();
       $LostAnimal->user_id= \Auth()->user()->id;
@@ -105,7 +111,6 @@ if(isset($animal))
    $status = true;
         $response = ['status' => $status , 'items' => $LostAnimal ,'url'=> $lastpath ];
 
-
  return response()->json($response);
     }
 
@@ -121,7 +126,7 @@ if(isset($animal))
 
         $status = true;
         $response = ['status' => $status , 'items' => $LostAnimal  ];
-         return response()->json($response);
+         return response()->json($response);  
 
     }
 
@@ -145,11 +150,11 @@ if(isset($animal))
      */
     public function update(Request $request, $id)
     {
-
+        
         $MyAnimal=LostAnimal::find($id);
 
 
-
+     
 
       if (isset($request->name)){
 
@@ -201,7 +206,7 @@ if (isset($request->note)){
 
             }
         }
-
+              
 
         if(isset($new_au)){
             if ($new_au != ''  or $new_au != null) {
@@ -211,14 +216,14 @@ if (isset($request->note)){
 }
 
       $MyAnimal->update();
-
+           
         $status = true;
         $response = ['status' => $status , 'items' => $MyAnimal  ,'url'=> $lastpath];
-
+    
 
 
  return response()->json($response);
-
+      
     }
 
     /**
@@ -229,11 +234,15 @@ if (isset($request->note)){
      */
     public function destroy($id)
     {
-          $LostAnimal=LostAnimal::find($id);
+          $LostAnimal=LostAnimal::find($id);        
          $LostAnimal->delete();
-
+           
         $status = true;
         $response = ['status' => $status ];
-        return response()->json($response);
+        return response()->json($response);  
     }
+    
+    
+    
+    
 }

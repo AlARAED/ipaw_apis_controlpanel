@@ -59,6 +59,11 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
         <link rel="shortcut icon" href="favicon.ico" /> </head>
+        <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- END HEAD -->
 
     <body class=" login">
@@ -69,90 +74,20 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
-        <div class="content">
+        <div class="content" style="    background-color: #3e4656!important;
+">
             <!-- BEGIN LOGIN FORM -->
 
 
               @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                             <div class="alert alert-success">
+    <strong>اتمام العملية !</strong> تم تغيير كلمة المرور بنجاح
+  </div>
+                            
+                          
                         </div>
                     @endif
- <form method="POST" action="{{ route('password.update') }}"  class="login-form">
-                        @csrf
-
-                                       <input type="hidden" name="token" value="{{ $token }}">
-
-                <h3 class="form-title font-green">{{ __('Reset Password') }}</h3>
-                <div class="alert alert-danger display-hide">
-                    <button class="close" data-close="alert"></button>
-                </div>
-                <div class="form-group">
-                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">البريد الالكترونى </label>
-
-
-
-  <input id="email" type="email" class="form-control form-control-solid placeholder-no-fix @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
-
-
-                 
-
-                </div>
-
-
-
-
-
-                              
-
-
-                <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9"> كلمة السر الجديدة</label>
-
-
-                     <input id="password" type="password" class="form-control form-control-solid placeholder-no-fix @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"     placeholder="  new password  ">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-
-
- <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9"> {{ __('Confirm Password') }}  </label>
-
-
-                     <input  class="form-control form-control-solid placeholder-no-fix "  id="password-confirm" type="password"
-name="password_confirmation" required autocomplete="new-password"   placeholder="   Confirm new password    ">
-
-                             
-                            </div>
-
-
-
-
-
-
-                <div class="form-actions">
-                    <button type="submit" class="btn green uppercase">                                    {{ __('Reset Password') }}
-</button>
-                   
-                </div>
-                
-                
-            </form>
-
 
             
         </div>

@@ -14,188 +14,94 @@
 
    function pushNotification($notification)
     {
-        $auth_key = "AAAA8Y5TC78:APA91bFED6qVQVHmFL_ZnDoCJy0KIs3fsIcUVIpK-zMy5C0uishYpXYXxz9197MoVnfm85iAK55bQRf_WgnUpLR4JQE9zJeiCrRnjytSKWKrFGVkTiUPdYoC_0c1QEiIoZgC8yVJJDnP";
-         // $device_token = $notification['device_token'];
-
-
-        if($device_token == NULL){
-            return 0;
-        }
-        $message = [
-            'body'  => $notification['body'],
-            'title' => $notification['title'],
-            'icon'  => 'myicon',
-            'sound' => 'mySound'
-        ];
-
-        $fields = json_encode([
-            'registration_ids' => $device_token,
-            'notification'     => $message
-        ]);
-
-        $ch = curl_init ();
-        curl_setopt ( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt ( $ch, CURLOPT_POST, true );
-        curl_setopt ( $ch, CURLOPT_HTTPHEADER, ['Authorization: key=' . $auth_key, 'Content-Type: application/json']);
-        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields);
-
-        $result = curl_exec ( $ch );
-        curl_close ( $ch );
-    }
-# -------------------------------------------------
-     function broadCastNotification($title, $body, $image='')
-    {
-        $auth_key = ". ";
-        $topic   = "/";
-        $message = [
-            'body'         => $body,
-            'title'        => $title,
-            'icon'         => 'myicon',
-            'sound'        => 'mySound'
-        ];
-
-        $fields = json_encode([
-            'to'           => $topic,
-            'notification' => $message
-        ]);
-
-        $ch = curl_init ();
-        curl_setopt ( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt ( $ch, CURLOPT_POST, true );
-        curl_setopt ( $ch, CURLOPT_HTTPHEADER, ['Authorization: key=' . $auth_key, 'Content-Type: application/json']);
-        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields);
-
-        $result = curl_exec ( $ch );
-        curl_close ( $ch );
-    }
-
-
-
-
-
-
-function notifyByOneSignal($audience = ['included_segments' => array('All')] , $contents = ['en' => ''] , $data = []){
-    return true;
-    // audience include_player_ids
-    $appId = ['app_id' => env('ONE_SIGNAL_APP_ID')];
-    $fields = json_encode((array)$appId + (array)$audience + ['contents' => (array)$contents ] + ['data' => (array)$data]);
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
-        'Authorization: Basic '.env('ONE_SIGNAL_KEY')));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    curl_setopt($ch, CURLOPT_POST, TRUE);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    return $response;
-}
-
-function notifyByFirebase($title,$body,$tokens,$data = [])        // paramete 5 =>>>> $type
-{
-// https://gist.github.com/rolinger/d6500d65128db95f004041c2b636753a
-// API access key from Google FCM App Console
-   // env('FCM_API_ACCESS_KEY'));
-//    $singleID = 'eEvFbrtfRMA:APA91bFoT2XFPeM5bLQdsa8-HpVbOIllzgITD8gL9wohZBg9U.............mNYTUewd8pjBtoywd';
-//    $registrationIDs = array(
-//        'eEvFbrtfRMA:APA91bFoT2XFPeM5bLQdsa8-HpVbOIllzgITD8gL9wohZBg9U.............mNYTUewd8pjBtoywd',
-//        'eEvFbrtfRMA:APA91bFoT2XFPeM5bLQdsa8-HpVbOIllzgITD8gL9wohZBg9U.............mNYTUewd8pjBtoywd',
-//        'eEvFbrtfRMA:APA91bFoT2XFPeM5bLQdsa8-HpVbOIllzgITD8gL9wohZBg9U.............mNYTUewd8pjBtoywd'
-//    );
-   $registrationIDs = $tokens;
-// prep the bundle
-// to see all the options for FCM to/notification payload:
-// https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support
-// 'vibrate' available in GCM, but not in FCM
-   $fcmMsg = array(
-       'body' => $body,
-       'title' => $title,
-       'sound' => "default",
-       'color' => "#203E78"
-   );
-// I haven't figured 'color' out yet.
-// On one phone 'color' was the background color behind the actual app icon.  (ie Samsung Galaxy S5)
-// On another phone, it was the color of the app icon. (ie: LG K20 Plush)
-// 'to' => $singleID ;      // expecting a single ID
-// 'registration_ids' => $registrationIDs ;     // expects an array of ids
-// 'priority' => 'high' ; // options are normal and high, if not set, defaults to high.
-   $fcmFields = array(
-       'registration_ids' => $registrationIDs,
-       'priority' => 'high',
-       'notification' => $fcmMsg,
-       'data' => $data
-   );
-   $headers = array(
-        'Authorization: key='.env('FIREBASE_API_ACCESS_KEY'),
-        'Content-Type: application/json'
+        // dd($notification['device_token']);
+        
+          $token = $notification['device_token'];
+          
+          
+        //   $token = $notification['device_token'];
+    define( 'API_ACCESS_KEY', 'AAAAWEzU-As:APA91bF8BjHYTiz7yu2Ffvj1VFi-brJtMjBMWX8f0clWWxJwp3YHsrediuqOmGFTzR9_zz4kgcacaQhZTFJRw5QOBJGMgMKeJObRA_i4lqqhTIGTuf-MxZOBTQug-aPKlWGx7uSEN8gZ');
+    $msg = array
+    (
+        'body' 	=> 'alaaaaaashawaa',
+        'title'	=>'applaham',
+        'type'	=>'2',
+        'order_id'	=>'1',
     );
-   // if($type == 'client')
-   // {
-   //     $headers = array(
-   //         'Authorization: key='.env('API_ACCESS_KEY_client'),
-   //         'Content-Type: application/json'
-   //     );
-   // }
-   // if($type == 'driver')
-   // {
-   //     $headers = array(
-   //         'Authorization: key='.env('API_ACCESS_KEY_driver'),
-   //         'Content-Type: application/json'
-   //     );
-   // }
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-   curl_setopt($ch, CURLOPT_POST, true);
-   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmFields));
-   $result = curl_exec($ch);
-   curl_close($ch);
-   return $result;
-   }
-function responsejson($status,$message,$data = null)
-    {
-        $response = [
-            'status'=>$status,
-            'message'=>$message,
-            'data'=>$data,
-        ];
-        return response()->json($response);
-    }
-function client()
-{
-    return auth()->guard('client')->user();
-}
-function restaurant()
-{
-    return auth()->guard('restaurant')->user();
-}
+    $fields = array
+    (
+        'to'=>$token  ,
+        'notification'=> $msg
+    );
 
-function settings()
-{
-    $settings =  \App\Setting::find(1);
 
-    if ($settings)
-    {
-        return $settings;
-    }else{
-        return new \App\Setting;
-    }
-}
-function page($id)
-{
-    $page =  \App\Page::find($id);
-    if ($page)
-    {
-        return $page;
-    }else{
-        return new \App\Page;
-    }
+
+$notification['content_available'] = true;
+$header = ['Authorization: Key=' . API_ACCESS_KEY, 'Content-Type: Application/json'];
+$tokens[] = $token;
+
+$payload = ['registration_ids' => $tokens,
+            'notification' => $notification,
+//            data message
+            'data' => $notification];
+            
+            
+// $payload = ['registration_ids' => $tokens, 'data' => $msg];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => json_encode($payload),
+    CURLOPT_HTTPHEADER => $header
+));
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+return response()->json([
+    'firebase_response' => json_decode($response)
+],200);
+
+
+
+
+
+
+      
+//     define( 'API_ACCESS_KEY', 'AAAA-wIV5oo:APA91bFbUfvjJQQ4sEZDfpRZthvDc9vEiSfzOFYjfMy4OGqJZ1WQL96mwtYY_iamEOdeHRqqdJcQWfoZvIPWXlXUDG8XYD0gkmsBxjMkAu7u7GrziWe4y57N4PP6XaoFvqkCHLymR22A');
+//     $msg = array
+//     (
+//         'body' 	=> $notification['body'],
+//         'title'	=>$notification['title'],
+//     );
+//     $fields = array
+//     (
+//         'to'=>$notification['device_token'] ,
+//         'notification'=> $msg
+//     );
+
+
+//     $headers = array
+//     (
+//         'Authorization: key=' . API_ACCESS_KEY,
+//         'Content-Type: application/json'
+//     );
+//     $ch = curl_init();
+//     curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send
+// ' );
+//     curl_setopt( $ch,CURLOPT_POST, true );
+//     curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+//     curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+//     curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+//     curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+
+//     $result = curl_exec($ch);
+//      echo  $result;
+
+//     curl_close($ch);
+
+
+
 }
 
 ?>

@@ -13,8 +13,7 @@ class Care extends Model
      	return Category::where('id',$this->category_id)->first();
      }
 
-
-          public function executewarning()
+     public function executewarning()
     {
         return $this->hasMany('App\executewarning');
     } 

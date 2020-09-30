@@ -67,14 +67,17 @@ class UserController extends Controller
 
 
 
-
-
-
-
+//   $items = \App\User::where('email', $request->email)->get();
+//   if($items){
+//       $status = 200;
+//             $response = ['status' => $status ,'error' =>'forbidden'];
+//             return response()->json($response);
+//   }
+ 
         //dd($request);
         //// validate from  app data
         if (!$request->has('client_id') or !$request->has('client_secret')){
-            $status = false;
+             $status = false;
             $response = ['status' => $status ,'error' =>'forbidden'];
             return response()->json($response);
         }
@@ -114,7 +117,9 @@ if ($validator->fails()) {
                 $user->fcm_token = $request->fcm_token;
                 $user->save();
               
-$lastpath= url('/uploads', $user->image);
+
+
+             $lastpath= url('/uploads', $user->image);
 
 
                 $accessToken = $user->createToken('authToken')->accessToken;
@@ -126,7 +131,6 @@ $lastpath= url('/uploads', $user->image);
             }
 
         }
-       
 
   public function detailsauth() 
     { 
@@ -141,10 +145,10 @@ $lastpath= url('/uploads', $user->image);
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-
-            $lastpath= url('/uploads', $user->image);
+   $lastpath= url('/uploads', $user->image);
 
    return response(['user' => $user,'access_token'=>$user->createToken('MyApp')-> accessToken  ,'url'=>$lastpath]);
+
 
                                  // return  $this->access_token($request) ;
 
@@ -210,6 +214,8 @@ $lastpath= url('/uploads', $user->image);
     $User=User::find(\Auth::user()->id);
 
     $new_au="";
+                if (isset($request->image)) {
+
    if ($request->hasFile('image')) {
 
             $ext = pathinfo($request->file('image')->getClientOriginalName(),
@@ -224,22 +230,30 @@ $lastpath= url('/uploads', $user->image);
 
             }
         }
-              
+                }
+                
 
         if(isset($new_au)){
             if ($new_au != ''  or $new_au != null) {
                 $User->image =$new_au;
 
             }
+            
+            
 }
             if (isset($request->name)) {
 
     $User->name=$request->name;
 }
+           
+           
+           
             if (isset($request->email)) {
 
     $User->email=$request->email;
 }
+
+
 
        if (isset($request->password)) {
 
@@ -248,9 +262,13 @@ $lastpath= url('/uploads', $user->image);
 
 
     $User->update();
+    
+        $password=\Hash::make($User->password);
+
+    
    
          $status = true;
-        $response = ['status' => $status , 'items' => $User ,'url'=> $lastpath];
+        $response = ['status' => $status , 'items' => $User ,'password'=>$password,'url'=> $lastpath];
                 return response()->json($response);
 
 
@@ -288,9 +306,12 @@ $user = User::find(\Auth::user()->id);
 
 
 foreach ($user->notifications as $notification) 
-     $status = true;
+
+  $status = true;
         $response = ['status' => $status , 'items' => $notification ];
         return response()->json($response);
+
+
 
     } 
 
@@ -325,6 +346,7 @@ public function search(Request $request)
       $q=$request->q;
 $user = User::where ( 'name', 'LIKE', '%' . $q . '%' )->get();
     if (count ( $user ) > 0){
+      
 
           $status = true;
         $response = ['status' => $status , 'items' => $user ];
@@ -336,5 +358,114 @@ $user = User::where ( 'name', 'LIKE', '%' . $q . '%' )->get();
 }
     
          return response()->json($response); } 
+         
+         
+           public function searchuserwithanimal(Request $request,$id)
+    {
+
+
+      $q=$request->q;
+$user = User::with('animals')->where ( 'id', $id )->get();
+    if (count ( $user ) > 0){
+
+          $status = true;
+        $response = ['status' => $status , 'items' => $user ];
+
+}
+    else{
+
+         $response = ['status' => 'No Details found. Try to search again !' , 'items' => $user ];
+}
+
+         return response()->json($response); }
+         
+         
+      public function userfrind() 
+    { 
+        
+        
+        $user=Auth::user()->friends()->get();
+        
+        
+      
+          if (count ( $user ) > 0){
+
+          $status = true;
+        $response = ['status' => $status , 'items' => $user ];
+
+}
+    else{
+
+         $response = ['status' => 'No  found.' , 'items' => $user ];
+}
+
+         return response()->json($response);
+
+}   
+   
+public function addfrind(Request $request,$idfrind) 
+    { 
+        // Auth::user()->friends()->sync([$idfrind]);
+        Auth::user()->friends()->attach($idfrind);
+        
+         $response = ['status' => 'sucessfuly'];
+         return response()->json($response); 
+
+} 
+   public function removefrind(Request $request,$idfrind) 
+    { 
+        Auth::user()->friends()->detach([$idfrind]);
+
+         $response = ['status' => 'sucessfuly'];
+         return response()->json($response); 
+
+
+} 
+       
+       
+       
+       
+       public function usernotfriend(Request $request) 
+    { 
+
+
+      $q=$request->q;
+$user = User::where ( 'name', 'LIKE', '%' . $q . '%' )->get();
+    if (count ( $user ) > 0){
+      
+
+          $status = true;
+        $response = ['status' => $status , 'items' => $user ];
+
+}
+    else{
+
+         $response = ['status' => 'No Details found. Try to search again !' , 'items' => $user ];
+}
+    
+         return response()->json($response); } 
+         
+         
+         
+         
+         
+         public function SaveFCMToken(Request $request)
+    {
+        if (!isset($request->fcm_token)) {
+            return UrlRequestStatus::error(trans('api.you have to send fcm token for your device'));
+        }
+     $user=User::find(\Auth::user()->id);
+        $user->update([
+            'fcm_token' => $request->fcm_token
+        ]);
+        
+        
+        
+$status = true;
+        $response = ['status' => $status,$user];
+ return response()->json($response);
+    }
+          
+
 
 }

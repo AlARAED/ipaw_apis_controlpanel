@@ -18,10 +18,9 @@ class executewarningcontroller extends Controller
     public function index($idanimal)
     {
        
-         #$executewarning=executewarning::with('Cares')->where('my_animal_id','=',$idanimal)->get();
+$executewarning=executewarning::with('cares')->where('my_animal_id','=',$idanimal)->get();
 
-$executewarning=Care::with('executewarning')->where('executewarning.my_animal_id','=',$idanimal)->get();
-dd($executewarning);
+
         $status = true;
         $response = ['status' => $status , 'items' => $executewarning  ];
          return response()->json($response);  
@@ -67,7 +66,6 @@ dd($executewarning);
       $executewarning->my_animal_id= $request->get('my_animal_id');
       $executewarning->care_id =$request->get('care_id');
       $executewarning->typerepeat =$request->get('typerepeat');
-      $executewarning->newdate = 1111;
       $executewarning->startdate =$request->get('startdate');
         $executewarning->user_id= \Auth::user()->id;
 

@@ -19,7 +19,10 @@ class MyAnimal extends Model
      	return Category::where('id',$this->category_id)->first();
      }
 
-
+     public function users()
+     {
+         return $this->belongsTo(' App\User');
+     }
      public function userName(){
      	return User::where('id',$this->user_id)->first();
      }

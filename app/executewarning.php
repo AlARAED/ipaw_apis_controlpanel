@@ -13,10 +13,10 @@ class executewarning extends Model
 
     protected $guarded = array();
 
-    protected $with= ['cares'];
 
-           public function Cares()
+
+           public function cares()
     {
-        return $this->belongsTo('App\Models\Care');
+        return $this->belongsTo('App\Models\Care','care_id');
     }
 }

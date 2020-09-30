@@ -35,7 +35,7 @@ class QuestionController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $Question  ];
-         return response()->json($response);
+         return response()->json($response); 
     }
 
 
@@ -49,7 +49,7 @@ class QuestionController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $Question  ];
-         return response()->json($response);
+         return response()->json($response); 
     }
     /**
      * Show the form for creating a new resource.
@@ -79,21 +79,21 @@ class QuestionController extends Controller
       User::find(\Auth::user()->id)->notify(new AddquestionNotification());
       Admin::find(1)->notify(new arrivequestiontoadmin($Question));
 
-      $user_token=User::find(\Auth::user()->id);
+     $user_token=User::find(\Auth::user()->id);
 
  $notification=[
-        'device_token'=>'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc2MjNlMTBhMDQ1MTQwZjFjZmQ0YmUwNDY2Y2Y4MDM1MmI1OWY4MWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vaXBhdy03Yzg5YyIsImF1ZCI6ImlwYXctN2M4OWMiLCJhdXRoX3RpbWUiOjE1OTQwNzU0MTUsInVzZXJfaWQiOiJxRlZVMzJsQzNzZmVmSlNpeUdQT1BFRVI1MW4yIiwic3ViIjoicUZWVTMybEMzc2ZlZkpTaXlHUE9QRUVSNTFuMiIsImlhdCI6MTU5NDA3NTQxNSwiZXhwIjoxNTk0MDc5MDE1LCJlbWFpbCI6ImlwYXcyQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJpcGF3MkBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.KUj-sGAkLjl46JG2UPp7DG4JPhnh82ydEMpfF46eSE8DKL-jTPkgiBzGceFo5wCQfevZ-UNmrJQB6-JVTqg4rVCE9flFPMIklDJPPt1Pqu6ARMZwRiTbbW13YCRvvBLJydZfrxxxxYLWrsnYgF5Z-urIfOFJFf8SblQbfurGmX_goM3UpCzE3yMp8AKtIgpVW2mMYPcdvgtty5GZIvPnnWTCfYwrSMY-ZCKaW0eJflBgJBZHGE2MRTEujmQX0RrwC50NL480HEnQG_XAm4a7oezkkCeN9-XS2WmMm0Wt8psbrnkTArQcSTx6uFtiAulJMmRf0CP7Lg9eM6ru7YYxwQ',
+        'device_token'=>'eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ5YWQ5YmM1ZThlNDQ3OTNhMjEwOWI1NmUzNjFhMjNiNDE4ODA4NzUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vaXBhdy03Yzg5YyIsImF1ZCI6ImlwYXctN2M4OWMiLCJhdXRoX3RpbWUiOjE1OTk5NDA4NjksInVzZXJfaWQiOiJSRldveEZDeGd6UGhnTG5xcWZlRjU0MFdqZEwyIiwic3ViIjoiUkZXb3hGQ3hnelBoZ0xucXFmZUY1NDBXamRMMiIsImlhdCI6MTU5OTk0MDg2OSwiZXhwIjoxNTk5OTQ0NDY5LCJlbWFpbCI6ImJsdUBibHUuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImJsdUBibHUuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.oiKLC7TII7l32SqL1Yrko5s-LO3mCk1yZPD9hAY_9ytyjro6ReVjp_G7IBcRQ8D5yywcUsU10kMygzow1qMFL6ZHyMuPf2V1cuegLucLzY8W6ERokU9ToWb7ED6G7-ivt0ZxvV4X1t9tcGj3kLanVJ5kLIixpXyrzDoT42bZAqcxRAHs5J8DxeXjqlUbl5MlfQndDDX0sNOSttKRmXnyki_eiD-p_TarhuIAxMD63okUJa4vHTYfDk9mltPhz6atOF2-SNrNFKcDChYEDFMVh9HeQDCOL7UHQW9rFJi7tbXDTwIDp0_EEWUrZrJxQgWVjt8aZc9uam',
         'title'=>'New question ipaw',
         'body'=>'wait answer by adminstrator goodluck!',
       ];
 
-                pushNotification($notification);
+                return   pushNotification($notification);
 
 
 
 
 // dd( $user_token);
-//       $tokens=[
+//       $tokens=[ 
 //         $user_token->fcm_token,
 //       ];
 //      if(count($tokens))
@@ -107,7 +107,7 @@ class QuestionController extends Controller
 //             $send = notifyByFirebase($title , $content , $tokens,$data);
 //             info("firebase result: " . $send);
 //         }
-
+        
 
 
 
@@ -118,20 +118,20 @@ class QuestionController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $Question ];
-
+            
 }
 
       else{
   $status = false;
         $response = ['status' => $status];
-
+       
 
 
       }
  return response()->json($response);
 
 
-
+    
     }
 
 
@@ -159,7 +159,6 @@ class QuestionController extends Controller
 
 
 
-
                // $Question=Question::find($request->question_id);
                //  $Question->done_answer=1;
                //  $Question->update();
@@ -168,20 +167,20 @@ class QuestionController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $Answers ];
-
+            
 }
 
       else{
   $status = false;
         $response = ['status' => $status];
-
+       
 
 
       }
  return response()->json($response);
 
 
-
+    
     }
 
     /**
@@ -226,7 +225,7 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-         $Question=Question::find($id);
+         $Question=Question::find($id); 
             if(isset($Question)) {
           if(\Auth::user()->id == $Question->user_id or \Auth::user()->id==1 ){
 
@@ -239,7 +238,7 @@ class QuestionController extends Controller
       else{
         $status = false;
         $response = ['status' => $status];
-
+       
 
 }
  }
@@ -247,12 +246,12 @@ class QuestionController extends Controller
  else{
         $status = false;
         $response = ['status' => $status];
-
+       
 
 }
-
+ 
 return response()->json($response);
 
     }
-
+    
 }

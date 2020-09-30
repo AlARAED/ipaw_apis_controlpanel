@@ -44,9 +44,8 @@ class FoodBlogController extends Controller
     {
         //
     }
-
-
-
+    
+    
 public function searchfoodblog(Request $request) 
     { 
 
@@ -65,6 +64,8 @@ $user = FoodBlog::where( 'name_ar', 'LIKE', '%' . $q . '%' )->orwhere( 'name_en'
 }
     
          return response()->json($response); } 
+
+    
 
     /**
      * Store a newly created resource in storage.

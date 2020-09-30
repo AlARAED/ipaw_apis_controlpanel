@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\CommentShare;
+use App\CommentShare;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Challenging;
 use App\Http\Requests\CommentReequest;

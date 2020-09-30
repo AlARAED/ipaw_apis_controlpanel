@@ -8,6 +8,7 @@ use App\Models\MyAnimal;
 use App\Http\Requests\MyAnimalRequest;
 
 use App\Models\Training;
+use App\Models\ExecuteTraining;
 
 
 class MyAniamlController extends Controller
@@ -19,12 +20,14 @@ class MyAniamlController extends Controller
      */
     public function index()
     {
-         $MyAnimal=MyAnimal::join('categories','categories.id','=','my_animals.category_id')
-           ->select('my_animals.*','categories.*','my_animals.image')
+        $MyAnimal=MyAnimal::join('categories','categories.id','=','my_animals.category_id')
+           ->select('my_animals.*','categories.*','my_animals.image','my_animals.id')
            ->where('user_id','=',\Auth::user()->id)->get();
 
-
-
+        
+           
+           
+           
         $status = true;
         $response = ['status' => $status , 'items' => $MyAnimal  ];
          return response()->json($response);    }
@@ -75,7 +78,7 @@ class MyAniamlController extends Controller
 
             }
         }
-
+              
 
         if(isset($new_au)){
             if ($new_au != ''  or $new_au != null) {
@@ -89,13 +92,13 @@ class MyAniamlController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $MyAnimal  ,'url'=> $lastpath];
-
+            
 }
 
       else{
   $status = false;
         $response = ['status' => $status];
-
+       
 
 
       }
@@ -116,7 +119,7 @@ class MyAniamlController extends Controller
 
         $status = true;
         $response = ['status' => $status , 'items' => $MyAnimal  ];
-         return response()->json($response);
+         return response()->json($response);    
     }
 
     /**
@@ -139,7 +142,7 @@ class MyAniamlController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+       
 
          $MyAnimal=MyAnimal::find($id);
 
@@ -148,7 +151,7 @@ class MyAniamlController extends Controller
  if (isset($request->content)){
     $MyAnimal->content=$request->content;
             }
-
+     
 
       if (isset($request->name)){
 
@@ -196,7 +199,7 @@ if (isset($request->category_id)){
 
             }
         }
-
+              
 
         if(isset($new_au)){
             if ($new_au != ''  or $new_au != null) {
@@ -206,7 +209,7 @@ if (isset($request->category_id)){
 }
 
       $MyAnimal->update();
-
+           
         $status = true;
         $response = ['status' => $status , 'items' => $MyAnimal  ,'url'=> $lastpath];
     }
@@ -223,7 +226,7 @@ if (isset($request->category_id)){
      */
     public function destroy($id)
     {
-           $MyAnimal=MyAnimal::find($id);
+           $MyAnimal=MyAnimal::find($id); 
             if(isset( $MyAnimal)) {
           if(\Auth::user()->id == $MyAnimal->user_id or \Auth::user()->id==1 ){
 
@@ -236,7 +239,7 @@ if (isset($request->category_id)){
       else{
         $status = false;
         $response = ['status' => $status];
-
+       
 
 }
  }
@@ -244,10 +247,10 @@ if (isset($request->category_id)){
  else{
         $status = false;
         $response = ['status' => $status];
-
+       
 
 }
-
+ 
 return response()->json($response);
 
     }
@@ -256,7 +259,7 @@ return response()->json($response);
 
   public function allevaluate_animal($id)
     {
-               $my_animal_id=Training::where('my_animal_id','=',$id)->pulk('evalute');
+        $my_animal_id=ExecuteTraining::where('my_animal_id','=',$id)->pluck('evalute');
   $status = true;
         $response = ['status' => $status , 'items' => $my_animal_id  ];
         return response()->json($response);

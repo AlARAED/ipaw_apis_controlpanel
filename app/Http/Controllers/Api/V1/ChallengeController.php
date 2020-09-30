@@ -40,7 +40,8 @@ class ChallengeController extends Controller
     
     public function index()
     {
-         $Challenging= Challenging::with('comments.CommentShare')->get();
+             $Challenging= Challenging::with('comments.CommentShare','comments.user','comments.likes')->get();
+
          foreach($Challenging as $Challeng){
          $lastpath= url('/uploads',$Challeng->image);
      }

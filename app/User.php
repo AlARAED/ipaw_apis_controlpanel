@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens; 
 
-
+use App\Models\MyAnimal;
 
 class User extends Authenticatable
 
@@ -44,9 +44,20 @@ class User extends Authenticatable
     ];
 
 
-
-
+public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+  public function animals()
+    {
+        return $this->hasMany(MyAnimal::class);
+    }
     public function AauthAcessToken(){
     return $this->hasMany('\App\OauthAccessToken');
+}
+
+public function friends()
+{
+    return $this->belongsToMany(User::class, 'frinds', 'user_id', 'friend_id');
 }
 }

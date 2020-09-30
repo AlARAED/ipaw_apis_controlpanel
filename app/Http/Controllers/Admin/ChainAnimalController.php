@@ -64,7 +64,7 @@ class ChainAnimalController extends Controller
       $ChainAnimal->name_en =$request->get('name_en');
       $ChainAnimal->content_ar= $request->get('content_ar');
       $ChainAnimal->content_en= $request->get('content_en');
-       $ChainAnimal->category_id= $request->get('category_id');
+       $ChainAnimal->departchain_id= $request->get('category_id');
 
 
        if (isset($request->image)) {

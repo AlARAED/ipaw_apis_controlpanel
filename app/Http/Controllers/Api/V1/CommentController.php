@@ -10,6 +10,8 @@ use App\Models\Challenging;
 use App\Http\Requests\CommentReequest;
 
 use App\Models\Like;
+use App\User;
+
 
 class CommentController extends Controller
 {
@@ -287,10 +289,10 @@ return response()->json($response);
 
 
 
-    public function alllike()
+    public function alllike($idc)
     {
-         $likes= Comment::with('likes')->get();
-         $status = true;
+         $likes= Comment::with('likes','user')->where('challenging_id',$idc)->get();
+ $status = true;
         $response = ['status' => $status , 'items' => $likes  ];
         return response()->json($response);
 

@@ -19,8 +19,7 @@ class LostAnimalController extends Controller
     {
 
 
-          $LostAnimal=LostAnimal::all();
-
+          $LostAnimal=LostAnimal::all();    
 
           return view('cpanel.lostanimal',compact('LostAnimal'));
 
@@ -89,10 +88,10 @@ class LostAnimalController extends Controller
      */
     public function destroy($id)
     {
-
-         $LostAnimal=LostAnimal::where('id',$id)->delete();
-
-     Alert::success('نجاح العمية', '  تم  بنجاح ');
+        
+         $LostAnimal=LostAnimal::where('id',$id)->delete();        
+           
+     Alert::success('نجاح العمية', '  تم  بنجاح '); 
      return redirect()->back();
     }
 }

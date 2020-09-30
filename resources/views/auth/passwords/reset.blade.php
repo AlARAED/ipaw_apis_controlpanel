@@ -66,6 +66,11 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
+            
+@if (session()->has('success')) 
+{{ session('success') }} 
+@endif
+            
  <form method="POST" action="{{ route('password.update') }}"  class="login-form">
                         @csrf
 

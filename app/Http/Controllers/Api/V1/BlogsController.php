@@ -111,11 +111,7 @@ class BlogsController extends Controller
 
        
     }
-
-
-
-
-public function searchblog(Request $request) 
+    public function searchblog(Request $request) 
     { 
 
 
@@ -137,4 +133,6 @@ $user = Blog::where( 'name_ar', 'LIKE', '%' . $q . '%' )->orwhere( 'name_en', 'L
 
 
      } 
+    
+    
 }

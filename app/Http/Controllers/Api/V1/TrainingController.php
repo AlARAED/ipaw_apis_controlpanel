@@ -237,10 +237,11 @@ $user = Training::where( 'name_ar', 'LIKE', '%' . $q . '%' )->orwhere( 'name_en'
       public function  deltemyvedio($id)
     {
 
+ $TrainingVedio=TrainingVedio::where('id',$id)->where('user_id',\Auth::user()->id)->delete();
 
+        // $TrainingVedio =TrainingVedio::where('user_id',24)->where('id',6)
+        // ->get();
 
-        $TrainingVedio =TrainingVedio::where('user_id',\auth()->user()->id)->where('id',$id)->delete();
-         
 
 
             $status = true;

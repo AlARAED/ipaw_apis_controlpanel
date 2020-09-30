@@ -9,7 +9,7 @@ Route::post('/login','Api\V1\UserController@login');
 Route::post('v1/resetpassword', 'Api\V1\UserController@resetpassword');
 Route::get('v1/alluser', 'Api\V1\UserController@alluser');
 
-
+Route::post('v1/save-fcm-token', 'Api\V1\UserController@SaveFCMToken');
 
 
 // Route::get('v1/locale/{locale}', function ($locale) {
@@ -17,8 +17,6 @@ Route::get('v1/alluser', 'Api\V1\UserController@alluser');
 //        return redirect()->back();
 
 //    });
-
-
 
 
 Route::group(['prefix' => 'v1' , 'namespace' => 'Api\V1' ,'middleware' => ['auth:api']], function () {
@@ -35,7 +33,7 @@ Route::POST('storecomments', 'CommentController@store');
 Route::post('editecomments/{id}','CommentController@update');
 Route::post('deletecomments/{id}','CommentController@destroy');
 Route::get('addlike/{idc}/{idch}','CommentController@addlike');
-Route::get('alllike', 'CommentController@alllike');
+Route::get('alllike/{idc}', 'CommentController@alllike');
 Route::post('changesettinguser','UserController@changesettinguser');
 Route::POST('storemyanimal', 'MyAniamlController@store');
 Route::get('allmyanimal', 'MyAniamlController@index');
@@ -86,7 +84,7 @@ Route::POST('addanswerquestion', 'QuestionController@storeanswerquestion');
  Route::post('addcommentchainanimal', 'ChainAnimalController@addcommentchainanimal');
  Route::post('addexecutingtraining', 'TrainingController@store');
     Route::get('alltraining', 'TrainingController@index');
-    Route::post('/searchalltraining', 'TrainingController@searchalltraining');
+    Route::post('searchalltraining', 'TrainingController@searchalltraining');
 
     Route::get('alltstep/{id}', 'TrainingController@indexsteps');
     Route::post('uploadvedio', 'TrainingController@storevedio');
@@ -117,7 +115,7 @@ Route::POST('addanswerquestion', 'QuestionController@storeanswerquestion');
  Route::get('/factory_myself/{id}', 'FactoryMyselfController@show');
  Route::post('addcommentfactory_myself', 'FactoryMyselfController@addcommentfactory_myself');
 
-
+    
     Route::get('/allmaindepartment', 'BlogsController@allmaindepartment');
 
  Route::get('/allblogs/{idmaindep}', 'BlogsController@index');
@@ -141,25 +139,26 @@ Route::POST('addanswerquestion', 'QuestionController@storeanswerquestion');
     Route::post('removeloqah/{idloqah}', 'loqshcontroller@destroy');
 
     Route::post('search', 'UserController@search');
+    Route::get('userfrind', 'UserController@userfrind');
+    Route::post('addfrind/{idfrind}', 'UserController@addfrind');
+
+    Route::post('removefrind/{idfrind}', 'UserController@removefrind');
 
 
-    //////api
+    //////api 
     Route::get('departchains','departchainController@index');
 
     Route::POST('storecommentshare', 'CommentShareController@store');
     Route::post('editecommentshare/{id}','CommentShareController@update');
     Route::post('deletecommentshare/{id}','CommentShareController@destroy');
+    
+
+
+    Route::post('searchuserwithanimal/{id}', 'UserController@searchuserwithanimal');
+
+
 
     Route::post('searchblog', 'BlogsController@searchblog');
-
-
-
-
-
-
-
-
-
 
 
 

@@ -22,11 +22,13 @@ class tabaneeAnimalController extends Controller
     {
 
 
-        
+           
         
   $tabanee=tabanee::join('users','users.id','=','tabanees.user_id')
            ->join('categories','categories.id','=','tabanees.category_id')
            ->select('tabanees.*','categories.*','users.name as user_name','users.name as user-name')->get();
+        
+
         
 
         $status = true;
